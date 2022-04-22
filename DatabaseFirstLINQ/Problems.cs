@@ -15,13 +15,13 @@ namespace DatabaseFirstLINQ
         }
         public void RunLINQQueries()
         {
-            //ProblemOne();
-            //ProblemTwo();
-            //ProblemThree();
-            //ProblemFour();
-            //ProblemFive();
+            ProblemOne();
+            ProblemTwo();
+            ProblemThree();
+            ProblemFour();
+            ProblemFive();
             ProblemSix();
-            //ProblemSeven();
+            ProblemSeven();
             //ProblemEight();
             //ProblemNine();
             //ProblemTen();

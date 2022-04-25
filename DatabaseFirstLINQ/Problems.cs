@@ -22,11 +22,11 @@ namespace DatabaseFirstLINQ
             ProblemFive();
             ProblemSix();
             ProblemSeven();
-            //ProblemEight();
-            //ProblemNine();
+            ProblemEight();
+            ProblemNine();
             //ProblemTen();
-            //ProblemEleven();
-            //ProblemTwelve();
+            ProblemEleven();
+            ProblemTwelve();
             //ProblemThirteen();
             //ProblemFourteen();
             //ProblemFifteen();
@@ -146,6 +146,11 @@ namespace DatabaseFirstLINQ
         {
             // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "afton@gmail.com".
             // Then print the product's name, price, and quantity to the console.
+            var customerCart = _context.ShoppingCarts.Include(sc => sc.User).Include(sc => sc.Product).Where(sc => sc.User.Email == "afton@gmail.com");
+            foreach (ShoppingCart product in customerCart)
+            {
+                Console.WriteLine($"{product.Product.Name} Price: {product.Product.Price} Quantity: {product.Quantity}");
+            }
 
         }
 
@@ -154,15 +159,17 @@ namespace DatabaseFirstLINQ
             // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "oda@gmail.com" and returns the sum of all of the products prices.
             // HINT: End of query will be: .Select(sc => sc.Product.Price).Sum();
             // Then print the total of the shopping cart to the console.
-
+            var customerCart = _context.ShoppingCarts.Include(sc => sc.User).Include(sc => sc.Product).Where(sc => sc.User.Email == "oda@gmail.com").Select(sc => sc.Product.Price).Sum();
+            Console.WriteLine($"${customerCart} total.");
         }
 
         private void ProblemTen()
         {
             // Write a LINQ query that retreives all of the products in the shopping cart of users who have the role of "Employee".
             // Then print the user's email as well as the product's name, price, and quantity to the console.
-
-        }
+            var customerCart = _context.Roles.Include(sc => sc.RoleName == "Employee");
+            Console.WriteLine(customerCart);
+    }
 
         // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
 
@@ -171,19 +178,29 @@ namespace DatabaseFirstLINQ
         private void ProblemEleven()
         {
             // Create a new User object and add that user to the Users table using LINQ.
+            DateTime date = new DateTime(2018, 1, 1, 12, 0, 0);
             User newUser = new User()
             {
                 Email = "david@gmail.com",
-                Password = "DavidsPass123"
+                Password = "DavidsPass123",
+                RegistrationDate = date
             };
             _context.Users.Add(newUser);
             _context.SaveChanges();
+            Console.WriteLine(newUser.Email);
         }
 
         private void ProblemTwelve()
         {
             // Create a new Product object and add that product to the Products table using LINQ.
-
+            Product product = new Product()
+            {
+                Name = "Swiffer3000",
+                Description = "sweeps floors",
+                Price = 25
+            };
+            _context.Products.Add(product);
+            _context.SaveChanges();
         }
 
         private void ProblemThirteen()
